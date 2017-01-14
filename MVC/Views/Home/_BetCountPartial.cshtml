@@ -1,0 +1,6 @@
+﻿@model MVC.ViewModels.Lot.LotViewModel
+
+<h3><strong>@Html.DisplayNameFor(x => Model.Price):</strong> @Html.DisplayFor(x => Model.Price)</h3>
+<h3><strong>@Html.DisplayNameFor(x => x.BetCount):</strong> @Html.DisplayFor(x => Model.BetCount)</h3>
+
+@{ Html.RenderAction("BetPartial", "Bet", new { lotId = Model.Id });}

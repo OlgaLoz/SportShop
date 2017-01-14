@@ -1,0 +1,23 @@
+﻿@model MVC.ViewModels.User.UserViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>@Model.Login, do you really want to delete your account?</h3>
+    </div>
+    <div class="panel-body">
+        <div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-actions">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                    @Html.ActionLink("Back to profile", "Index", new { page = ViewBag.Page })
+                </div>
+            }
+        </div>
+    </div>
+</div>

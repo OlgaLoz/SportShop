@@ -1,0 +1,40 @@
+﻿@using System.Web.Mvc.Html
+@using MVC.Helpers
+@model MVC.ViewModels.Pagging.BetPageViewModel
+    @if (Model.Bets == null || !Model.Bets.Any())
+    {
+        <div class="alert alert-info">
+            <h4><strong>Info!</strong>Your bet history is empty</h4>
+        </div>
+    }
+    else
+    {
+        <div>
+            <table class="table table-hover">
+                <tr>
+                    <th>@Html.Label("Time")</th>
+                    <th>@Html.Label("Lot")</th>
+                </tr>
+                @foreach (var item in Model.Bets)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(x => item.Time)</td>
+                        <td>@Html.ActionLink(item.LotName, "LotPage", "Home", new {id = item.LotId}, null)</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div class="text-center">
+            @Ajax.Page(@Model.PageInfo, "bets", x => Url.Action("ShowBetHistory",
+                new
+                {
+                    name = @Model.SearchName,
+                    low = @Model.LowDate,
+                    high = @Model.HighDate,
+                    page = x
+                }))
+        </div>
+    }
+
+

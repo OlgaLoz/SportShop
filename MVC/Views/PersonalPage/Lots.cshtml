@@ -1,0 +1,19 @@
+﻿@using System.Web.Razor.Text
+@using MVC.Helpers
+@model MVC.ViewModels.Pagging.LotPageViewModel
+@{
+    ViewBag.Title = "Lots";
+}
+
+<a href="@Url.Action("AddLot", "PersonalPage", new {page = Model.PageInfo.PageNumber})">
+    <p>
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Add new lot
+    </p>
+</a>
+
+@Html.Partial("_LotsPartial",@Model)
+
+<div class="text-center" id="loading" style="display: none">
+    <img src="~/Content/Images/loading.gif" alt="loading..." />
+</div>

@@ -1,0 +1,44 @@
+﻿@using MVC.Helpers
+@model MVC.ViewModels.Pagging.UserPageViewModel
+
+@if (Model.Users == null || Model.Users.Count == 0)
+{
+    <div class="alert alert-info">
+        <h4><strong>Info!</strong>Users matching your request were not found!</h4>
+    </div>
+}
+else
+{
+    <div id="users">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>@Html.Label("User")</th>
+                    <th>@Html.Label("Roles")</th>
+                    <th><span class="glyphicon glyphicon-edit"></span></th>
+                </tr>
+                @foreach (var item in Model.Users)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(x => item.Login)</td>
+                        <td>
+                            @foreach (var role in item.UserRoles)
+                            {
+                                <h5> @Html.Label(role)</h5>
+                            }
+                        </td>
+                        <td>@Html.ActionLink("Edit role", "EditRole",
+                           new
+                           {
+                               userId = item.Id, name = Model.SearchName, page = Model.PageInfo.PageNumber
+                           })</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div class="text-center">
+            @Ajax.Page(@Model.PageInfo, "users", x => Url.Action("Index", new {name = Model.SearchName, page = x}))
+        </div>
+    </div>
+}

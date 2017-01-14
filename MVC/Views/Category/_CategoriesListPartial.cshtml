@@ -1,0 +1,15 @@
+﻿@model IEnumerable<MVC.ViewModels.Category.CategoryViewModel>
+
+<ul class="nav nav-pills nav-stacked">
+    @foreach (var category in Model)
+    {
+        <li role="presentation">
+            <a data-ajax="true" data-ajax-mode="replace"
+               data-ajax-update="#lots" data-ajax-loading="#loading" data-ajax-loading-duration="1000" 
+               href="@Url.Action("Index", "Home", new {categoryId = category.Id})">
+                @category.Name
+                <span class="badge">@category.LotCountWithoutCurrentUser</span>
+            </a>           
+        </li>
+     }
+</ul>

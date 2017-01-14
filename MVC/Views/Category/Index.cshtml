@@ -1,0 +1,19 @@
+﻿@using MVC.Helpers
+@model MVC.ViewModels.Pagging.CategoryPageViewModel
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Categories:</h3>
+    </div>
+    <div class="panel-body">
+        @Html.Partial("_CategoriesPartial", Model)
+    </div>
+</div>
+
+<div class="text-center" id="loading" style="display: none">
+    <img src="~/Content/Images/loading.gif" alt="loading..." />
+</div>

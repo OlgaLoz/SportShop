@@ -1,0 +1,40 @@
+﻿@using System.Web.Mvc.Html
+@using MVC.Helpers
+@model MVC.ViewModels.Lot.LotViewModel
+
+
+<div id="lot-@Model.Id">
+    <h2>
+        @Html.ActionLink(Model.Name, "LotPage", "Home", new { id = Model.Id }, null)
+    </h2>
+    <h4>
+        @Html.DisplayFor(x => Model.Price)
+        <span class="glyphicon glyphicon-euro" aria-hidden="true"></span>
+    </h4>
+    <div class="col-lg-12">
+        @Html.Image(@Url.Action("GetImage", "Home",
+                        new { id = Model.Id }), "LotPicture", "200", "250")
+    </div>
+
+     <div class="col-lg-6">
+        <h4>
+            <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>
+            @Ajax.ActionLink("Bet this", "UpdateBetCount",
+                new
+                {
+                    lotId = Model.Id,
+                    name = (string)ViewBag.Name,
+                    low = (DateTime?)ViewBag.Low,
+                    high = (DateTime?)ViewBag.High,
+                    page = (int?)ViewBag.Page
+                },
+                new AjaxOptions { UpdateTargetId = $"lot-{Model.Id}", LoadingElementId = "loading", LoadingElementDuration = 1000 })
+        </h4>
+    </div>
+    <div class="col-lg-6">
+        <h4>
+        @Html.DisplayFor(item => item.BetCount)
+        @Html.Label(" bets")
+    </h4>
+</div>
+</div>

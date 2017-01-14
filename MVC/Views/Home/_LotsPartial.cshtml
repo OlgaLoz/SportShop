@@ -1,0 +1,19 @@
+﻿@using MVC.Helpers
+@model  MVC.ViewModels.Pagging.LotByCategoriesPageViewModel
+
+@if (Model.Lots == null || Model.Lots.Count == 0)
+{
+    <div class="alert alert-info">
+        <h4><strong>Info!</strong>No lots in this category</h4>
+    </div>
+}
+else
+{
+     @Html.Partial("_LotTablePartial", Model.Lots)
+    <br/>
+    <div class="text-center">
+        @Ajax.Page(@Model.PageInfo, "lots", x => Url.RouteUrl("LotsByCategory", 
+            new {categoryId = Model.CurrentCategory, page = x}))
+    </div>
+}
+

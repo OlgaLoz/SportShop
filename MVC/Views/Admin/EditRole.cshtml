@@ -1,0 +1,62 @@
+﻿@model MVC.ViewModels.Role.UserRoleViewModel
+
+@{
+    ViewBag.Title = "Edit role";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>@Html.DisplayFor(x => Model.UserName)</h3>
+    </div>
+    <div class="panel-body">
+        <h4>@Html.DisplayNameFor(x => Model.UserRoles)</h4>
+        @foreach (var item in Model.UserRoles)
+        {
+            <h5>@Html.DisplayFor(x => item.Text)</h5>
+        }
+        <div class="row">
+            <h4>@Html.ValidationSummary(false, "", new { @class = "text-danger" })</h4>
+        </div>
+   
+            @using (Html.BeginForm("AddRole", "Admin", FormMethod.Post))
+            {
+                <div class="form-inline">
+                    <div class="form-group">
+                        @Html.Hidden("page", (int?)ViewBag.Page)
+                        @Html.Hidden("name", (string)ViewBag.Name)
+                        @Html.HiddenFor(x => @Model.UserId)
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("New role: ", new {@class = "control-label"})
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownListFor(x => Model.RoleId, Model.Roles, new { @class = "form-control " })
+                    </div>
+                    <div class="form-group">
+                            <input type="submit" value="Add" class="btn btn-default" />
+                    </div>
+               </div>
+             }
+      <br/>
+            @using (Html.BeginForm("DeleteRole", "Admin", FormMethod.Post))
+            {
+                <div class="form-inline">
+                    @Html.Hidden("page", (int?) ViewBag.Page)
+                    @Html.Hidden("name", (string) ViewBag.Name)
+                    @Html.HiddenFor(x => @Model.UserId)
+                    <div class="form-group">
+                        @Html.Label("Role to remove: ", new {@class = "control-label"})
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownListFor(x => Model.RoleId, Model.UserRoles, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                       <input type="submit" value="Remove" class="btn btn-default"/>
+                    </div>
+                </div>
+            }   
+
+    </div>
+</div>
+
+@section Scripts {@Scripts.Render("~/bundles/jqueryval")}

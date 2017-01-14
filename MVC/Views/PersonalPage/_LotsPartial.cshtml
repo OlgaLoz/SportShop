@@ -1,0 +1,75 @@
+﻿@using MVC.Helpers
+@model MVC.ViewModels.Pagging.LotPageViewModel
+
+<div class="row" id="ownLots">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            @foreach (var item in Model.Lots)
+            {
+                <tr>
+                    <td>@Html.Image(@Url.Action("GetImage", "Home",
+                        new { id = item.Id }), "LotImage", "100", "120")</td>
+                    <td>
+                        <p><strong> @Html.DisplayNameFor(x => item.Name):</strong>@Html.DisplayFor(x => item.Name)</p>
+                        <p><strong> @Html.DisplayNameFor(x => item.Category):</strong>@Html.DisplayFor(x => item.Category)</p>
+                        <p><strong> @Html.DisplayNameFor(x => item.Price):</strong>@Html.DisplayFor(x => item.Price)</p>
+                    </td>
+                    <td>
+                        <p id="status-@item.Id">                          
+                            @Html.Partial("_StatusPartial",item.Status)
+                        </p>
+                        <p><strong> @Html.DisplayNameFor(x => item.BetCount):</strong>@Html.DisplayFor(x => item.BetCount)</p>
+                        @{ Html.RenderAction("BetPartial", "Bet", new { lotId = item.Id, page = Model.PageInfo.PageNumber});}
+                    </td>
+                    <td>
+                        <a href="@Url.Action("EditLot", "PersonalPage", new {id = item.Id, page = Model.PageInfo.PageNumber})">
+                            <p>
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                @Html.Label("Edit")
+                            </p>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("DeleteLot", "PersonalPage", new {id = item.Id, page = Model.PageInfo.PageNumber})">
+                            <p>
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                @Html.Label("Delete")
+                            </p>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Sell", "PersonalPage", new {id = item.Id, page = Model.PageInfo.PageNumber})">
+                            <p>
+                                <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>
+                                @Html.Label("Sell")
+                            </p>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a href="@Url.Action("ShowLotsBetHistory", "Bet", new {lotId = item.Id, page = Model.PageInfo.PageNumber})">
+                            <p>
+                                <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>
+                                @Html.Label("Bets")
+                            </p>
+                        </a>
+                    </td>
+
+                    <td>
+                        <a>
+                            <p>
+                                <span class="glyphicon glyphicon-export" aria-hidden="true"></span>
+                                @Ajax.ActionLink("Change status", "UpdateStatus", "PersonalPage",
+                                    new {id = item.Id, page = Model.PageInfo.PageNumber },
+                                    new AjaxOptions {UpdateTargetId = $"status-{@item.Id}", LoadingElementId = "loading", LoadingElementDuration = 1000 })
+                            </p></a>
+                    </td>
+                </tr>
+           }
+        </table>
+    </div>
+
+    <div class="text-center">
+        @Ajax.Page(@Model.PageInfo, "ownLots", x => Url.Action("Lots", new {page = x}))
+    </div>
+</div>

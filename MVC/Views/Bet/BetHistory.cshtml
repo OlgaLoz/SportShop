@@ -1,0 +1,50 @@
+﻿@model MVC.ViewModels.Pagging.BetPageViewModel
+@{
+    ViewBag.Title = "BetHistory";
+}
+
+<h2>BetHistory</h2>
+
+<div class="jumbotron">
+    @using (Ajax.BeginForm("ShowBetHistory", "Bet", new AjaxOptions {UpdateTargetId = "bets", LoadingElementId = "loading", LoadingElementDuration = 1000 }))
+    {
+        <div class="row">
+            <div class="col-lg-4">
+                <input type="text" name="name" id ="name" class="form-control" maxlength="64" placeholder="Lot name" value=@Model.SearchName>
+            </div>
+            <div class="col-lg-4">
+                <input type="date" name="low" class="form-control" maxlength="64" placeholder="From date" value=@Model.LowDate>
+            </div>
+            <div class="col-lg-4">
+                <input type="date" name="high" class="form-control" maxlength="64" placeholder="To date" value=@Model.HighDate>
+            </div>
+
+            <div class="row input-group-btn text-center">
+                <button class="btn btn-default" type="submit" value="Search"><i class="glyphicon glyphicon-search"></i>Search</button>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row" id="bets">
+    @Html.Partial("_BetHistoryPartial", Model)
+</div>
+
+<div class="text-center" id="loading" style="display: none">
+    <img src="~/Content/Images/loading.gif" alt="loading..." />
+</div>
+
+
+<script type="text/javascript">
+    $('#name').keyup(function() {
+        var value = $(this).val();
+        value = encodeURIComponent(value);
+        $.ajax({
+            url: '@Url.Action("ShowBetHistory", "Bet")',
+            data: { name: value },
+            success: function (dat) {
+                $('#bets').html(dat);
+            }
+        });
+    })
+</script>

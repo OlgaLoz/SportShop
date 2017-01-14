@@ -1,0 +1,34 @@
+﻿@model MVC.ViewModels.Pagging.BetPageViewModel
+
+@{
+    ViewBag.Title = "LotsBetHistory";
+}
+
+@if (Model.Bets == null || !Model.Bets.Any())
+{
+    <div class="alert alert-info">
+        <h4><strong>Info!</strong>There is no bets on this lot</h4>
+    </div>
+}
+else
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>Lot bet history:</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row" id="bets">
+                @Html.Partial("_LotsBetHistoryPartial", Model)
+            </div>
+
+        </div>
+    </div>
+}
+
+<div class="text-center" id="loading" style="display: none">
+    <img src="~/Content/Images/loading.gif" alt="loading..." />
+</div>
+
+
+
+

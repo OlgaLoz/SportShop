@@ -1,0 +1,39 @@
+﻿@using MVC.Helpers
+@model MVC.ViewModels.Lot.LotViewModel
+
+@{ViewBag.Title = "Lot";}
+
+<div class="row">
+    <div class="col-lg-6">
+        @Html.Image(@Url.Action("GetImage", "Home",
+                        new { id = Model.Id }), "LotImage", "300", "400")
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2><strong>@Html.DisplayFor(x => Model.Name):</strong></h2>
+            </div>
+            <div class="panel-body">
+                <h3><strong> @Html.DisplayNameFor(x => x.Category):</strong> @Html.DisplayFor(x => Model.Category)</h3>
+                <h3><strong>@Html.DisplayNameFor(x => x.Owner): </strong> @Html.DisplayFor(x => Model.Owner)</h3>
+                <div id="lot"> @Html.Partial("_BetCountPartial", @Model) </div>
+            </div>
+        </div>
+    </div>
+    </div>
+<hr />
+<div class="row">
+    <h3><strong>@Html.DisplayNameFor(x => x.Description):</strong></h3>
+    <h4>@Html.DisplayFor(x => Model.Description)</h4>
+</div>
+<div class="row">
+    <h3>
+        <span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span>
+        @Ajax.ActionLink("Bet this", "DoBet", new { lotId = Model.Id },
+        new AjaxOptions { UpdateTargetId = "lot", LoadingElementId = "loading", LoadingElementDuration = 1000 })
+    </h3>
+</div>
+
+<div class="text-center" id="loading" style="display: none">
+    <img src="~/Content/Images/loading.gif" alt="loading..." />
+</div>
